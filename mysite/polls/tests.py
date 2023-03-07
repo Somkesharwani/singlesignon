@@ -108,6 +108,13 @@ class TestIndexView(BaseTestCase):
 
         self.assertContains(response, first_name_input)
         self.assertContains(response, last_name_input)
+    
+    def test_add_question(self):
+        response = self.client.get(reverse("polls:add_question"), follow=True)
+        assert response.status_code == HTTP_200_OK, response.status_code
+        self.assertTemplateUsed(response, 'polls/add_question.html')
+
+    
 
 
 class TestPerformance(BaseTestCase):
@@ -142,3 +149,4 @@ class TestPollsMiddleware(BaseTestCase):
         assert login, "Login Failed"
         response = self.client.get(reverse("polls:index"), follow=True)
         self.assertRedirects(response, reverse("polls:my_profile"))
+
