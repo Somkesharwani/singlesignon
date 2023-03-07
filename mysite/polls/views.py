@@ -61,34 +61,61 @@ def edit_answer(request, poll_id, answer_id):
 
 @login_required
 def answer(request, poll_id):
+    """
+    This code is handling the answer related request
+    """
     poll = get_object_or_404(Poll, pk=poll_id)
     if request.method == "POST":
+        """
+        This code is use to add answer for the given poll_id.
+        """
         ans = request.POST.get('your_answer')
         answer = Answer.objects.create(poll=poll, user=request.user, value=ans)
         answer.save()
         return redirect('polls:index')
     elif request.method == "GET":
+        """
+        This code is use to get all answer for given poll id.
+        """
         answers = poll.answers.only('value')
         context = {"poll": poll, "answers": answers}
         return render(request,'polls/answer.html',context)
+    
 
 @login_required
 def question(request):
+    """
+    This code is handling get and post request for answer
+    """
     if request.method == "POST":
+        """
+        This code adding new question and redirect the request to index page
+        """
         quest = Poll.objects.create(title=request.POST.get('your_quest'))
         quest.save()
         return redirect("polls:index")
     elif request.method == "GET":
+        """
+        This code is use get all question asked
+        """
         lst = Poll.objects.all()
         context = { 'latest_question_list': lst, }
         return render(request=request,template_name='polls/question.html',context=context)
+    
 
 @login_required
 def question_form(request):
+    """
+    Renders the page for creating a new poll.
+    """
     return render(request=request,template_name='polls/add_question.html')
+
 
 @login_required
 def answer_form(request,poll_id):
+    """
+    Renders the page for creating a new answer to a specific poll.
+    """
     question =get_object_or_404(Poll,pk=poll_id)
     context = { 
         'poll_id':poll_id,
