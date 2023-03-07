@@ -13,7 +13,7 @@
 <tbody>
     {% for poll in polls %}
         <tr>
-            <th colspan="4">{{ poll.title }}</th>
+            <th colspan="4">{{ poll.title }}<a href="{% url 'polls:add_answer' poll.id %}"   class="btn btn-link">Add Answer </a></th>
         </tr>
         {% for answer in poll.answers %}
             <tr>
@@ -41,8 +41,10 @@
     {% endfor %}
 </tbody>
 </table>
-{% endblock %}
 
+<a class="btn btn-primary" href="{% url 'polls:add_question' %}" role="button">Ask Question!</a>
+
+{% endblock %}
 {% block scripts %}
     <script src="/static/polls.js"></script>
 {% endblock %}

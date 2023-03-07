@@ -4,7 +4,7 @@ function saveAnswer(pollId, answerId) {
     const value = document.getElementById('form-'+ answerId).value
     console.info(value)
     const fetchPromise = fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             'value': value

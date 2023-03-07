@@ -38,4 +38,4 @@ class ProfileRedirectionMiddleware:
             and request.path not in skip_urls
             and not is_profile_complete(current_user)
         ):
-            return HttpResponseRedirect(reverse_lazy("my_profile"))
+            return HttpResponseRedirect(reverse_lazy("polls:my_profile"))

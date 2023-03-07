@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="/polls/question" method="post">
+    {% csrf_token %}
+    <label for="your_quest">Your Question: </label>
+    <input id="your_input" type="text" name="your_quest" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+
+{% endblock %}

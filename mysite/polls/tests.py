@@ -81,7 +81,7 @@ class TestIndexView(BaseTestCase):
         assert login_success, "Login failed"
 
     def test_polls_displayed(self):
-        response = self.client.get(reverse("index"), follow=True)
+        response = self.client.get(reverse("polls:index"), follow=True)
         assert response.status_code == HTTP_200_OK, response.status_code
         self.assertTemplateUsed(response, 'polls/index.html')
         self.assertContains(response, "What is your favourite color?")
@@ -90,7 +90,7 @@ class TestIndexView(BaseTestCase):
         self.assertContains(response, "Mosley")
 
     def test_profile_page(self):
-        response = self.client.get(reverse("my_profile"), follow=True)
+        response = self.client.get(reverse("polls:my_profile"), follow=True)
         assert response.status_code == HTTP_200_OK, response.status_code
         self.assertTemplateUsed(response, 'polls/current_user.html')
         first_name_input = (
@@ -128,7 +128,7 @@ class TestPerformance(BaseTestCase):
 
     def test_querycount(self):
         with self.assertNumQueries(13):
-            self.client.get(reverse('index'))
+            self.client.get(reverse('polls:index'))
 
 
 class TestPollsMiddleware(BaseTestCase):
@@ -140,5 +140,5 @@ class TestPollsMiddleware(BaseTestCase):
         models.Profile.objects.create(user=user, site=self.site, dynamic_fields=[])
         login = self.client.login(username="random", password="random")
         assert login, "Login Failed"
-        response = self.client.get(reverse("index"), follow=True)
-        self.assertRedirects(response, reverse("my_profile"))
+        response = self.client.get(reverse("polls:index"), follow=True)
+        self.assertRedirects(response, reverse("polls:my_profile"))
